@@ -1,4 +1,8 @@
-import subprocess, sys, re
+import subprocess, sys, re, os
+mode="cli"
+
+if os.path.isfile("guiactivated"):
+    mode="gui"
 
 if sys.argv.__len__() > 1:
     stream_name = sys.argv[1]
@@ -31,6 +35,10 @@ try:
         if player_line.startswith("ICY Info: "):
             song_name = re.match("ICY Info: StreamTitle='(.*?)';StreamUrl='';", player_line).group(1)
             print "New song! %s" % song_name
+            #kill previous yad window
+            #display song title
+            #record songs played in a text file for reference
+            #need to catch if yad's returning an exit, so that the player may be killed
 except KeyboardInterrupt:
     player.kill()
 except Exception, e:
