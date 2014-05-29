@@ -1,6 +1,12 @@
 import subprocess, sys, re, os
 mode="cli"
 
+def songnamewindow(songname):
+    if songwindow:
+        songwindow.kill()
+    try:
+        songwindow = subprocess.Popen(["yad",'''--title="Song Information"''','''--text={0}'''.format(songname)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+
 if os.path.isfile("guiactivated"):
     mode="gui"
 
@@ -32,13 +38,23 @@ except OSError as err:
 try:
     while not player.poll():
         player_line = player.stdout.readline()
+        songwindowline= songwindow.stdout.readline()
+        
+        if songwindowline.startswith("1"):
+            player.kill()
+            menu = subprocess.Popen(["radioreddit-gui.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            exit 0
+        
         if player_line.startswith("ICY Info: "):
             song_name = re.match("ICY Info: StreamTitle='(.*?)';StreamUrl='';", player_line).group(1)
             print "New song! %s" % song_name
+            
+
             #kill previous yad window
             #display song title
             #record songs played in a text file for reference
             #need to catch if yad's returning an exit, so that the player may be killed
+            
 except KeyboardInterrupt:
     player.kill()
 except Exception, e:
