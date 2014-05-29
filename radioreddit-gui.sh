@@ -1,9 +1,13 @@
 #very simple gui with yad
 
 touch "guiactivated"
-choice=$(yad --width=400 --height=250 --title="Radio Reddit" --list --column="Radio List" "Main" "Indie" "Random" "Rock" "Metal")
+choice=$(yad --width=400 --height=250 --button=gtk-close:1 --title="Radio Reddit" --list --column="Radio List" "Main" "Indie" "Random" "Rock" "Metal")
 ret=$?
 echo "$ret"
+
+if [ $ret -eq 1 ]; then
+exit 0
+fi
 
 choice=$(echo $choice | awk 'BEGIN {FS="|" } { print $1 }')
 if [ "$choice" == "Main" ]; then
