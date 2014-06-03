@@ -2,6 +2,7 @@ import subprocess, sys, re, os
 mode="cli"
 
 def songnamewindow(songname):
+    global songwindow
     if songwindow:
         songwindow.kill()
     if songwindow.poll()==None:
