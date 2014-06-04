@@ -1,7 +1,7 @@
 #very simple gui with yad
 
 touch "guiactivated"
-choice=$(yad --width=400 --height=250 --button=gtk-close:1 --title="Radio Reddit" --list --column="Radio List" "Main" "Indie" "Random" "Rock" "Metal")
+choice=$(yad --width=400 --height=250 --button=gtk-close:1 --title="Radio Reddit" --list --column="Radio List" "Main" "Indie" "Random" "Rock" "Metal" "Quit")
 ret=$?
 echo "$ret"
 
@@ -24,6 +24,10 @@ if [ "$choice" == "Rock" ]; then
 fi
 if [ "$choice" == "Metal" ]; then
   python radioreddit-cli.py metal
+fi
+
+if [ "$choice" == "Quit" ]; then
+  exit 0
 fi
 
 #extremely basic at this stage. Will improve on this shortly. 
