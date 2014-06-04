@@ -1,6 +1,8 @@
 import subprocess, sys, re, os
 mode="cli"
 
+#may be better to use the notification icon function from yad instead... need to try it out. 
+
 def songnamewindow(songname):
     global songwindow
     if songwindow:
